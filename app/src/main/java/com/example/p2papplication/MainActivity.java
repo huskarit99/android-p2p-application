@@ -1,9 +1,12 @@
 package com.example.p2papplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.DisplayMetrics;
@@ -27,16 +30,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<MessageChatBox> listMessage = new ArrayList<>();
     CustomAdapter customAdapter;
 
-    LinearLayout llGrid, llShadow, llBorder;
-    ArrayList<TextView> chessBoard;
-    TextView A0, A1, A2, A3, A4, A5, A6, A7;
-    TextView B0, B1, B2, B3, B4, B5, B6, B7;
-    TextView C0, C1, C2, C3, C4, C5, C6, C7;
-    TextView D0, D1, D2, D3, D4, D5, D6, D7;
-    TextView E0, E1, E2, E3, E4, E5, E6, E7;
-    TextView F0, F1, F2, F3, F4, F5, F6, F7;
-    TextView G0, G1, G2, G3, G4, G5, G6, G7;
-    TextView H0, H1, H2, H3, H4, H5, H6, H7;
+    LinearLayout llShadow, llBorder;
+    ConstraintLayout ctlGrid;
+    TextView[][] DisplayBoard = new TextView[8][8];
+    TextView[][] DisplayBoardBackground = new TextView[8][8];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,171 +74,176 @@ public class MainActivity extends AppCompatActivity {
         params.width -= (8 * count * scale * displayMetrics.density);
         llBorder.setLayoutParams(params);
 
-        params = llGrid.getLayoutParams();
+        params = ctlGrid.getLayoutParams();
         params.height -= (8 * count * scale * displayMetrics.density);
         params.width -= (8 * count * scale * displayMetrics.density);
-        llGrid.setLayoutParams(params);
+        ctlGrid.setLayoutParams(params);
 
-        for (int i = 0; i < 64; i++) {
-            ViewGroup.LayoutParams paramsTextView = chessBoard.get(i).getLayoutParams();
-            paramsTextView.width -= (count * scale * displayMetrics.density);
-            paramsTextView.height -= (count * scale * displayMetrics.density);
-            chessBoard.get(i).setLayoutParams(paramsTextView);
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++) {
+                ViewGroup.LayoutParams paramsTextView = DisplayBoard[i][j].getLayoutParams();
+                paramsTextView.width -= (count * scale * displayMetrics.density);
+                paramsTextView.height -= (count * scale * displayMetrics.density);
+                DisplayBoard[i][j].setLayoutParams(paramsTextView);
+
+                paramsTextView = DisplayBoardBackground[i][j].getLayoutParams();
+                paramsTextView.width -= (count * scale * displayMetrics.density);
+                paramsTextView.height -= (count * scale * displayMetrics.density);
+                DisplayBoardBackground[i][j].setLayoutParams(paramsTextView);
         }
     }
 
     private void mapping() {
         listViewMessage = findViewById(R.id.listViewMessage);
-        llGrid = findViewById(R.id.llGrid);
+        ctlGrid = findViewById(R.id.ctlGrid);
         llShadow = findViewById(R.id.llShadow);
         llBorder = findViewById(R.id.llBorder);
-        chessBoard = new ArrayList<TextView>();
-        A0 = findViewById(R.id.A0);
-        chessBoard.add(A0);
-        A1 = findViewById(R.id.A1);
-        chessBoard.add(A1);
-        A2 = findViewById(R.id.A2);
-        chessBoard.add(A2);
-        A3 = findViewById(R.id.A3);
-        chessBoard.add(A3);
-        A4 = findViewById(R.id.A4);
-        chessBoard.add(A4);
-        A5 = findViewById(R.id.A5);
-        chessBoard.add(A5);
-        A6 = findViewById(R.id.A6);
-        chessBoard.add(A6);
-        A7 = findViewById(R.id.A7);
-        chessBoard.add(A7);
 
-        B0 = findViewById(R.id.B0);
-        chessBoard.add(B0);
-        B1 = findViewById(R.id.B1);
-        chessBoard.add(B1);
-        B2 = findViewById(R.id.B2);
-        chessBoard.add(B2);
-        B3 = findViewById(R.id.B3);
-        chessBoard.add(B3);
-        B4 = findViewById(R.id.B4);
-        chessBoard.add(B4);
-        B5 = findViewById(R.id.B5);
-        chessBoard.add(B5);
-        B6 = findViewById(R.id.B6);
-        chessBoard.add(B6);
-        B7 = findViewById(R.id.B7);
-        chessBoard.add(B7);
+        DisplayBoard[0][0] = (TextView) findViewById(R.id.R00);
+        DisplayBoardBackground[0][0] = (TextView) findViewById(R.id.R000);
+        DisplayBoard[1][0] = (TextView) findViewById(R.id.R10);
+        DisplayBoardBackground[1][0] = (TextView) findViewById(R.id.R010);
+        DisplayBoard[2][0] = (TextView) findViewById(R.id.R20);
+        DisplayBoardBackground[2][0] = (TextView) findViewById(R.id.R020);
+        DisplayBoard[3][0] = (TextView) findViewById(R.id.R30);
+        DisplayBoardBackground[3][0] = (TextView) findViewById(R.id.R030);
+        DisplayBoard[4][0] = (TextView) findViewById(R.id.R40);
+        DisplayBoardBackground[4][0] = (TextView) findViewById(R.id.R040);
+        DisplayBoard[5][0] = (TextView) findViewById(R.id.R50);
+        DisplayBoardBackground[5][0] = (TextView) findViewById(R.id.R050);
+        DisplayBoard[6][0] = (TextView) findViewById(R.id.R60);
+        DisplayBoardBackground[6][0] = (TextView) findViewById(R.id.R060);
+        DisplayBoard[7][0] = (TextView) findViewById(R.id.R70);
+        DisplayBoardBackground[7][0] = (TextView) findViewById(R.id.R070);
 
-        C0 = findViewById(R.id.C0);
-        chessBoard.add(C0);
-        C1 = findViewById(R.id.C1);
-        chessBoard.add(C1);
-        C2 = findViewById(R.id.C2);
-        chessBoard.add(C2);
-        C3 = findViewById(R.id.C3);
-        chessBoard.add(C3);
-        C4 = findViewById(R.id.C4);
-        chessBoard.add(C4);
-        C5 = findViewById(R.id.C5);
-        chessBoard.add(C5);
-        C6 = findViewById(R.id.C6);
-        chessBoard.add(C6);
-        C7 = findViewById(R.id.C7);
-        chessBoard.add(C7);
+        DisplayBoard[0][1] = (TextView) findViewById(R.id.R01);
+        DisplayBoardBackground[0][1] = (TextView) findViewById(R.id.R001);
+        DisplayBoard[1][1] = (TextView) findViewById(R.id.R11);
+        DisplayBoardBackground[1][1] = (TextView) findViewById(R.id.R011);
+        DisplayBoard[2][1] = (TextView) findViewById(R.id.R21);
+        DisplayBoardBackground[2][1] = (TextView) findViewById(R.id.R021);
+        DisplayBoard[3][1] = (TextView) findViewById(R.id.R31);
+        DisplayBoardBackground[3][1] = (TextView) findViewById(R.id.R031);
+        DisplayBoard[4][1] = (TextView) findViewById(R.id.R41);
+        DisplayBoardBackground[4][1] = (TextView) findViewById(R.id.R041);
+        DisplayBoard[5][1] = (TextView) findViewById(R.id.R51);
+        DisplayBoardBackground[5][1] = (TextView) findViewById(R.id.R051);
+        DisplayBoard[6][1] = (TextView) findViewById(R.id.R61);
+        DisplayBoardBackground[6][1] = (TextView) findViewById(R.id.R061);
+        DisplayBoard[7][1] = (TextView) findViewById(R.id.R71);
+        DisplayBoardBackground[7][1] = (TextView) findViewById(R.id.R071);
 
-        D0 = findViewById(R.id.D0);
-        chessBoard.add(D0);
-        D1 = findViewById(R.id.D1);
-        chessBoard.add(D1);
-        D2 = findViewById(R.id.D2);
-        chessBoard.add(D2);
-        D3 = findViewById(R.id.D3);
-        chessBoard.add(D3);
-        D4 = findViewById(R.id.D4);
-        chessBoard.add(D4);
-        D5 = findViewById(R.id.D5);
-        chessBoard.add(D5);
-        D6 = findViewById(R.id.D6);
-        chessBoard.add(D6);
-        D7 = findViewById(R.id.D7);
-        chessBoard.add(D7);
+        DisplayBoard[0][2] = (TextView) findViewById(R.id.R02);
+        DisplayBoardBackground[0][2] = (TextView) findViewById(R.id.R002);
+        DisplayBoard[1][2] = (TextView) findViewById(R.id.R12);
+        DisplayBoardBackground[1][2] = (TextView) findViewById(R.id.R012);
+        DisplayBoard[2][2] = (TextView) findViewById(R.id.R22);
+        DisplayBoardBackground[2][2] = (TextView) findViewById(R.id.R022);
+        DisplayBoard[3][2] = (TextView) findViewById(R.id.R32);
+        DisplayBoardBackground[3][2] = (TextView) findViewById(R.id.R032);
+        DisplayBoard[4][2] = (TextView) findViewById(R.id.R42);
+        DisplayBoardBackground[4][2] = (TextView) findViewById(R.id.R042);
+        DisplayBoard[5][2] = (TextView) findViewById(R.id.R52);
+        DisplayBoardBackground[5][2] = (TextView) findViewById(R.id.R052);
+        DisplayBoard[6][2] = (TextView) findViewById(R.id.R62);
+        DisplayBoardBackground[6][2] = (TextView) findViewById(R.id.R062);
+        DisplayBoard[7][2] = (TextView) findViewById(R.id.R72);
+        DisplayBoardBackground[7][2] = (TextView) findViewById(R.id.R072);
 
-        E0 = findViewById(R.id.E0);
-        chessBoard.add(E0);
-        E1 = findViewById(R.id.E1);
-        chessBoard.add(E1);
-        E2 = findViewById(R.id.E2);
-        chessBoard.add(E2);
-        E3 = findViewById(R.id.E3);
-        chessBoard.add(E3);
-        E4 = findViewById(R.id.E4);
-        chessBoard.add(E4);
-        E5 = findViewById(R.id.E5);
-        chessBoard.add(E5);
-        E6 = findViewById(R.id.E6);
-        chessBoard.add(E6);
-        E7 = findViewById(R.id.E7);
-        chessBoard.add(E7);
+        DisplayBoard[0][3] = (TextView) findViewById(R.id.R03);
+        DisplayBoardBackground[0][3] = (TextView) findViewById(R.id.R003);
+        DisplayBoard[1][3] = (TextView) findViewById(R.id.R13);
+        DisplayBoardBackground[1][3] = (TextView) findViewById(R.id.R013);
+        DisplayBoard[2][3] = (TextView) findViewById(R.id.R23);
+        DisplayBoardBackground[2][3] = (TextView) findViewById(R.id.R023);
+        DisplayBoard[3][3] = (TextView) findViewById(R.id.R33);
+        DisplayBoardBackground[3][3] = (TextView) findViewById(R.id.R033);
+        DisplayBoard[4][3] = (TextView) findViewById(R.id.R43);
+        DisplayBoardBackground[4][3] = (TextView) findViewById(R.id.R043);
+        DisplayBoard[5][3] = (TextView) findViewById(R.id.R53);
+        DisplayBoardBackground[5][3] = (TextView) findViewById(R.id.R053);
+        DisplayBoard[6][3] = (TextView) findViewById(R.id.R63);
+        DisplayBoardBackground[6][3] = (TextView) findViewById(R.id.R063);
+        DisplayBoard[7][3] = (TextView) findViewById(R.id.R73);
+        DisplayBoardBackground[7][3] = (TextView) findViewById(R.id.R073);
 
-        F0 = findViewById(R.id.F0);
-        chessBoard.add(F0);
-        F1 = findViewById(R.id.F1);
-        chessBoard.add(F1);
-        F2 = findViewById(R.id.F2);
-        chessBoard.add(F2);
-        F3 = findViewById(R.id.F3);
-        chessBoard.add(F3);
-        F4 = findViewById(R.id.F4);
-        chessBoard.add(F4);
-        F5 = findViewById(R.id.F5);
-        chessBoard.add(F5);
-        F6 = findViewById(R.id.F6);
-        chessBoard.add(F6);
-        F7 = findViewById(R.id.F7);
-        chessBoard.add(F7);
+        DisplayBoard[0][4] = (TextView) findViewById(R.id.R04);
+        DisplayBoardBackground[0][4] = (TextView) findViewById(R.id.R004);
+        DisplayBoard[1][4] = (TextView) findViewById(R.id.R14);
+        DisplayBoardBackground[1][4] = (TextView) findViewById(R.id.R014);
+        DisplayBoard[2][4] = (TextView) findViewById(R.id.R24);
+        DisplayBoardBackground[2][4] = (TextView) findViewById(R.id.R024);
+        DisplayBoard[3][4] = (TextView) findViewById(R.id.R34);
+        DisplayBoardBackground[3][4] = (TextView) findViewById(R.id.R034);
+        DisplayBoard[4][4] = (TextView) findViewById(R.id.R44);
+        DisplayBoardBackground[4][4] = (TextView) findViewById(R.id.R044);
+        DisplayBoard[5][4] = (TextView) findViewById(R.id.R54);
+        DisplayBoardBackground[5][4] = (TextView) findViewById(R.id.R054);
+        DisplayBoard[6][4] = (TextView) findViewById(R.id.R64);
+        DisplayBoardBackground[6][4] = (TextView) findViewById(R.id.R064);
+        DisplayBoard[7][4] = (TextView) findViewById(R.id.R74);
+        DisplayBoardBackground[7][4] = (TextView) findViewById(R.id.R074);
 
-        G0 = findViewById(R.id.G0);
-        chessBoard.add(G0);
-        G1 = findViewById(R.id.G1);
-        chessBoard.add(G1);
-        G2 = findViewById(R.id.G2);
-        chessBoard.add(G2);
-        G3 = findViewById(R.id.G3);
-        chessBoard.add(G3);
-        G4 = findViewById(R.id.G4);
-        chessBoard.add(G4);
-        G5 = findViewById(R.id.G5);
-        chessBoard.add(G5);
-        G6 = findViewById(R.id.G6);
-        chessBoard.add(G6);
-        G7 = findViewById(R.id.G7);
-        chessBoard.add(G7);
+        DisplayBoard[0][5] = (TextView) findViewById(R.id.R05);
+        DisplayBoardBackground[0][5] = (TextView) findViewById(R.id.R005);
+        DisplayBoard[1][5] = (TextView) findViewById(R.id.R15);
+        DisplayBoardBackground[1][5] = (TextView) findViewById(R.id.R015);
+        DisplayBoard[2][5] = (TextView) findViewById(R.id.R25);
+        DisplayBoardBackground[2][5] = (TextView) findViewById(R.id.R025);
+        DisplayBoard[3][5] = (TextView) findViewById(R.id.R35);
+        DisplayBoardBackground[3][5] = (TextView) findViewById(R.id.R035);
+        DisplayBoard[4][5] = (TextView) findViewById(R.id.R45);
+        DisplayBoardBackground[4][5] = (TextView) findViewById(R.id.R045);
+        DisplayBoard[5][5] = (TextView) findViewById(R.id.R55);
+        DisplayBoardBackground[5][5] = (TextView) findViewById(R.id.R055);
+        DisplayBoard[6][5] = (TextView) findViewById(R.id.R65);
+        DisplayBoardBackground[6][5] = (TextView) findViewById(R.id.R065);
+        DisplayBoard[7][5] = (TextView) findViewById(R.id.R75);
+        DisplayBoardBackground[7][5] = (TextView) findViewById(R.id.R075);
 
-        H0 = findViewById(R.id.H0);
-        chessBoard.add(H0);
-        H1 = findViewById(R.id.H1);
-        chessBoard.add(H1);
-        H2 = findViewById(R.id.H2);
-        chessBoard.add(H2);
-        H3 = findViewById(R.id.H3);
-        chessBoard.add(H3);
-        H4 = findViewById(R.id.H4);
-        chessBoard.add(H4);
-        H5 = findViewById(R.id.H5);
-        chessBoard.add(H5);
-        H6 = findViewById(R.id.H6);
-        chessBoard.add(H6);
-        H7 = findViewById(R.id.H7);
-        chessBoard.add(H7);
+        DisplayBoard[0][6] = (TextView) findViewById(R.id.R06);
+        DisplayBoardBackground[0][6] = (TextView) findViewById(R.id.R006);
+        DisplayBoard[1][6] = (TextView) findViewById(R.id.R16);
+        DisplayBoardBackground[1][6] = (TextView) findViewById(R.id.R016);
+        DisplayBoard[2][6] = (TextView) findViewById(R.id.R26);
+        DisplayBoardBackground[2][6] = (TextView) findViewById(R.id.R026);
+        DisplayBoard[3][6] = (TextView) findViewById(R.id.R36);
+        DisplayBoardBackground[3][6] = (TextView) findViewById(R.id.R036);
+        DisplayBoard[4][6] = (TextView) findViewById(R.id.R46);
+        DisplayBoardBackground[4][6] = (TextView) findViewById(R.id.R046);
+        DisplayBoard[5][6] = (TextView) findViewById(R.id.R56);
+        DisplayBoardBackground[5][6] = (TextView) findViewById(R.id.R056);
+        DisplayBoard[6][6] = (TextView) findViewById(R.id.R66);
+        DisplayBoardBackground[6][6] = (TextView) findViewById(R.id.R066);
+        DisplayBoard[7][6] = (TextView) findViewById(R.id.R76);
+        DisplayBoardBackground[7][6] = (TextView) findViewById(R.id.R076);
+
+        DisplayBoard[0][7] = (TextView) findViewById(R.id.R07);
+        DisplayBoardBackground[0][7] = (TextView) findViewById(R.id.R007);
+        DisplayBoard[1][7] = (TextView) findViewById(R.id.R17);
+        DisplayBoardBackground[1][7] = (TextView) findViewById(R.id.R017);
+        DisplayBoard[2][7] = (TextView) findViewById(R.id.R27);
+        DisplayBoardBackground[2][7] = (TextView) findViewById(R.id.R027);
+        DisplayBoard[3][7] = (TextView) findViewById(R.id.R37);
+        DisplayBoardBackground[3][7] = (TextView) findViewById(R.id.R037);
+        DisplayBoard[4][7] = (TextView) findViewById(R.id.R47);
+        DisplayBoardBackground[4][7] = (TextView) findViewById(R.id.R047);
+        DisplayBoard[5][7] = (TextView) findViewById(R.id.R57);
+        DisplayBoardBackground[5][7] = (TextView) findViewById(R.id.R057);
+        DisplayBoard[6][7] = (TextView) findViewById(R.id.R67);
+        DisplayBoardBackground[6][7] = (TextView) findViewById(R.id.R067);
+        DisplayBoard[7][7] = (TextView) findViewById(R.id.R77);
+        DisplayBoardBackground[7][7] = (TextView) findViewById(R.id.R077);
     }
 
     private void init() {
-        for (int i = 8; i < 16; i++) {
-            chessBoard.get(i).setBackgroundResource(R.drawable.ic_bpawn);
+        for (int j = 0; j < 8; j++) {
+            DisplayBoard[1][j].setBackgroundResource(R.drawable.ic_bpawn);
         }
 
-        for (int i = 48; i < 56; i++) {
-            chessBoard.get(i).setBackgroundResource(R.drawable.ic_wpawn);
+        for (int j = 0; j < 8; j++) {
+            DisplayBoard[6][j].setBackgroundResource(R.drawable.ic_wpawn);
         }
-
         listMessage.add(new MessageChatBox(true, "Hello !!!"));
         listMessage.add(new MessageChatBox(false, "Hello !!!"));
         listMessage.add(new MessageChatBox(true, "Tôi tên là Nguyễn Thái Học"));
