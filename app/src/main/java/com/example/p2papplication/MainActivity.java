@@ -237,10 +237,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+        DisplayBoard[0][0].setBackgroundResource(R.drawable.ic_brook);
+        DisplayBoard[0][7].setBackgroundResource(R.drawable.ic_brook);
+        DisplayBoard[0][1].setBackgroundResource(R.drawable.ic_bknight);
+        DisplayBoard[0][6].setBackgroundResource(R.drawable.ic_bknight);
+        DisplayBoard[0][2].setBackgroundResource(R.drawable.ic_bbishop);
+        DisplayBoard[0][5].setBackgroundResource(R.drawable.ic_bbishop);
+        DisplayBoard[0][3].setBackgroundResource(R.drawable.ic_bking);
+        DisplayBoard[0][4].setBackgroundResource(R.drawable.ic_bqueen);
+
         for (int j = 0; j < 8; j++) {
             DisplayBoard[1][j].setBackgroundResource(R.drawable.ic_bpawn);
         }
 
+        DisplayBoard[7][0].setBackgroundResource(R.drawable.ic_wrook);
+        DisplayBoard[7][7].setBackgroundResource(R.drawable.ic_wrook);
+        DisplayBoard[7][1].setBackgroundResource(R.drawable.ic_wknight);
+        DisplayBoard[7][6].setBackgroundResource(R.drawable.ic_wknight);
+        DisplayBoard[7][2].setBackgroundResource(R.drawable.ic_wbishop);
+        DisplayBoard[7][5].setBackgroundResource(R.drawable.ic_wbishop);
+        DisplayBoard[7][3].setBackgroundResource(R.drawable.ic_wking);
+        DisplayBoard[7][4].setBackgroundResource(R.drawable.ic_wqueen);
         for (int j = 0; j < 8; j++) {
             DisplayBoard[6][j].setBackgroundResource(R.drawable.ic_wpawn);
         }
