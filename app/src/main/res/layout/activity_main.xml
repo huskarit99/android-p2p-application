@@ -178,7 +178,6 @@
                         android:layout_height="wrap_content"
                         android:columnCount="8"
                         android:rowCount="8">
-
                         <TextView
                             android:id="@+id/A0"
                             android:layout_width="44dp"

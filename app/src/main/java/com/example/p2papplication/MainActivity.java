@@ -234,6 +234,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+        for (int i = 8; i < 16; i++) {
+            chessBoard.get(i).setBackgroundResource(R.drawable.ic_bpawn);
+        }
+
+        for (int i = 48; i < 56; i++) {
+            chessBoard.get(i).setBackgroundResource(R.drawable.ic_wpawn);
+        }
+
         listMessage.add(new MessageChatBox(true, "Hello !!!"));
         listMessage.add(new MessageChatBox(false, "Hello !!!"));
         listMessage.add(new MessageChatBox(true, "Tôi tên là Nguyễn Thái Học"));
