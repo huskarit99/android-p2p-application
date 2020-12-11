@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
   <resources>
-    <color name="colorButton">#B54900</color>
-    <color name="colorDiamond">#D2C026</color>
-    <color name="colorDivider">#863E23</color>
+    <color name="colorButton">#B54D00</color>
+    <color name="colorDiamond">#E5C927</color>
+    <color name="colorDivider">#833D20</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#4A0000</color>
     <color name="colorAccent">#FF4081</color>
@@ -15,4 +15,5 @@
     <color name="backgroundBoard">#4A0000</color>
     <color name="boarderBoard">#9B4C09</color>
     <color name="choose">#898989</color>
+    <color name="shadow">#290000</color>
   </resources>
