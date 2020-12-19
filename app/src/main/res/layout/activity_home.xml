@@ -9,14 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="12"
+        android:layout_weight="10.75"
         android:background="@drawable/ic_title_image">
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="">
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,8 +40,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
-            android:layout_marginLeft="25dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/border_menu">
@@ -54,11 +53,45 @@
                 android:background="@drawable/border_menu">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/button_shadow"
                     android:layout_margin="7dp"
                     android:elevation="30dp">
                     <LinearLayout
+                        android:id="@+id/llPlay"
+                        android:background="@drawable/ic_special_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="3dp"
+                        android:gravity="center">
+                        <TextView
+                            android:textAlignment="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Let's play"
+                            android:textStyle="bold"
+                            android:textSize="18dp"
+                            android:textColor="@color/colorDiamond">
+                        </TextView>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_divider">
+                    </ImageView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/button_shadow"
+                    android:layout_margin="7dp"
+                    android:elevation="30dp">
+                    <LinearLayout
+                        android:id="@+id/llScan"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/ic_button"
@@ -70,7 +103,7 @@
                             android:layout_height="wrap_content"
                             android:text="Scan For Player"
                             android:textStyle="bold"
-                            android:textSize="20dp"
+                            android:textSize="18dp"
                             android:textColor="@color/colorDiamond">
                         </TextView>
                     </LinearLayout>
@@ -86,11 +119,12 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/button_shadow"
                     android:layout_margin="7dp"
                     android:elevation="30dp">
                     <LinearLayout
+                        android:id="@+id/llProfile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/ic_button"
@@ -102,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:text="My Profile"
                             android:textStyle="bold"
-                            android:textSize="20dp"
+                            android:textSize="18dp"
                             android:textColor="@color/colorDiamond">
                         </TextView>
                     </LinearLayout>
@@ -118,11 +152,12 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/button_shadow"
                     android:layout_margin="7dp"
                     android:elevation="30dp">
                     <LinearLayout
+                        android:id="@+id/llFriends"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/ic_button"
@@ -134,7 +169,7 @@
                             android:layout_height="wrap_content"
                             android:text="My Friends"
                             android:textStyle="bold"
-                            android:textSize="20dp"
+                            android:textSize="18dp"
                             android:textColor="@color/colorDiamond">
                         </TextView>
                     </LinearLayout>
@@ -150,11 +185,12 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/button_shadow"
                     android:layout_margin="7dp"
                     android:elevation="30dp">
                     <LinearLayout
+                        android:id="@+id/llQuit"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/ic_button"
@@ -166,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:text="Quit"
                             android:textStyle="bold"
-                            android:textSize="20dp"
+                            android:textSize="18dp"
                             android:textColor="@color/colorDiamond">
                         </TextView>
                     </LinearLayout>

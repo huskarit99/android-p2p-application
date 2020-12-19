@@ -24,6 +24,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="50dp"
+                android:id="@+id/ivButtonBack"
                 android:src="@drawable/ic_button_back">
             </ImageView>
         </LinearLayout>

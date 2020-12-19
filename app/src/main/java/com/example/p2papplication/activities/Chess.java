@@ -1,19 +1,18 @@
 package com.example.p2papplication.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.p2papplication.R;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,74 +27,34 @@ public class Chess extends AppCompatActivity {
     ArrayList<MessageChatBox> listMessage = new ArrayList<>();
     Chess.CustomAdapter customAdapter;
 
-    LinearLayout llShadow, llBorder;
-    ConstraintLayout ctlGrid;
     TextView[][] DisplayBoard = new TextView[8][8];
     TextView[][] DisplayBoardBackground = new TextView[8][8];
+
+    ImageView ivExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_main);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_playchess);
+
         mapping();
-        autoFitScreen();
         customAdapter = new Chess.CustomAdapter();
         listViewMessage.setAdapter(customAdapter);
         init();
-    }
 
-    private void autoFitScreen() {
-        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int count = 0;
-        double scale = 0.1;
-        while (470 >= dpWidth + count*scale*8) {
-            count++;
-        }
-        System.out.println(count);
-        configChessBoard(count, scale);
-    }
-
-    private void configChessBoard(int count, double scale) {
-        ViewGroup.LayoutParams params;
-        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-
-        params = llShadow.getLayoutParams();
-        params.height -= (8 * count * scale * displayMetrics.density);
-        params.width -= (8 * count * scale * displayMetrics.density);
-        llShadow.setLayoutParams(params);
-
-        params = llBorder.getLayoutParams();
-        params.height -= (8 * count * scale * displayMetrics.density);
-        params.width -= (8 * count * scale * displayMetrics.density);
-        llBorder.setLayoutParams(params);
-
-        params = ctlGrid.getLayoutParams();
-        params.height -= (8 * count * scale * displayMetrics.density);
-        params.width -= (8 * count * scale * displayMetrics.density);
-        ctlGrid.setLayoutParams(params);
-
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++) {
-                ViewGroup.LayoutParams paramsTextView = DisplayBoard[i][j].getLayoutParams();
-                paramsTextView.width -= (count * scale * displayMetrics.density);
-                paramsTextView.height -= (count * scale * displayMetrics.density);
-                DisplayBoard[i][j].setLayoutParams(paramsTextView);
-
-                paramsTextView = DisplayBoardBackground[i][j].getLayoutParams();
-                paramsTextView.width -= (count * scale * displayMetrics.density);
-                paramsTextView.height -= (count * scale * displayMetrics.density);
-                DisplayBoardBackground[i][j].setLayoutParams(paramsTextView);
+        ivExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
+        });
     }
 
     private void mapping() {
         listViewMessage = findViewById(R.id.listViewMessage);
-        ctlGrid = findViewById(R.id.ctlGrid);
-        llShadow = findViewById(R.id.llShadow);
-        llBorder = findViewById(R.id.llBorder);
+        ivExit = findViewById(R.id.ivExit);
 
         DisplayBoard[0][0] = (TextView) findViewById(R.id.R00);
         DisplayBoardBackground[0][0] = (TextView) findViewById(R.id.R000);
@@ -235,29 +194,29 @@ public class Chess extends AppCompatActivity {
     }
 
     private void init() {
-        DisplayBoard[0][0].setBackgroundResource(R.drawable.ic_brook);
-        DisplayBoard[0][7].setBackgroundResource(R.drawable.ic_brook);
-        DisplayBoard[0][1].setBackgroundResource(R.drawable.ic_bknight);
-        DisplayBoard[0][6].setBackgroundResource(R.drawable.ic_bknight);
-        DisplayBoard[0][2].setBackgroundResource(R.drawable.ic_bbishop);
-        DisplayBoard[0][5].setBackgroundResource(R.drawable.ic_bbishop);
-        DisplayBoard[0][3].setBackgroundResource(R.drawable.ic_bking);
-        DisplayBoard[0][4].setBackgroundResource(R.drawable.ic_bqueen);
+        DisplayBoard[0][0].setBackgroundResource(R.drawable.brook);
+        DisplayBoard[0][7].setBackgroundResource(R.drawable.brook);
+        DisplayBoard[0][1].setBackgroundResource(R.drawable.bknight);
+        DisplayBoard[0][6].setBackgroundResource(R.drawable.bknight);
+        DisplayBoard[0][2].setBackgroundResource(R.drawable.bbishop);
+        DisplayBoard[0][5].setBackgroundResource(R.drawable.bbishop);
+        DisplayBoard[0][3].setBackgroundResource(R.drawable.bking);
+        DisplayBoard[0][4].setBackgroundResource(R.drawable.bqueen);
 
         for (int j = 0; j < 8; j++) {
-            DisplayBoard[1][j].setBackgroundResource(R.drawable.ic_bpawn);
+            DisplayBoard[1][j].setBackgroundResource(R.drawable.bpawn);
         }
 
-        DisplayBoard[7][0].setBackgroundResource(R.drawable.ic_wrook);
-        DisplayBoard[7][7].setBackgroundResource(R.drawable.ic_wrook);
-        DisplayBoard[7][1].setBackgroundResource(R.drawable.ic_wknight);
-        DisplayBoard[7][6].setBackgroundResource(R.drawable.ic_wknight);
-        DisplayBoard[7][2].setBackgroundResource(R.drawable.ic_wbishop);
-        DisplayBoard[7][5].setBackgroundResource(R.drawable.ic_wbishop);
-        DisplayBoard[7][3].setBackgroundResource(R.drawable.ic_wking);
-        DisplayBoard[7][4].setBackgroundResource(R.drawable.ic_wqueen);
+        DisplayBoard[7][0].setBackgroundResource(R.drawable.wrook);
+        DisplayBoard[7][7].setBackgroundResource(R.drawable.wrook);
+        DisplayBoard[7][1].setBackgroundResource(R.drawable.wknight);
+        DisplayBoard[7][6].setBackgroundResource(R.drawable.wknight);
+        DisplayBoard[7][2].setBackgroundResource(R.drawable.wbishop);
+        DisplayBoard[7][5].setBackgroundResource(R.drawable.wbishop);
+        DisplayBoard[7][3].setBackgroundResource(R.drawable.wking);
+        DisplayBoard[7][4].setBackgroundResource(R.drawable.wqueen);
         for (int j = 0; j < 8; j++) {
-            DisplayBoard[6][j].setBackgroundResource(R.drawable.ic_wpawn);
+            DisplayBoard[6][j].setBackgroundResource(R.drawable.wpawn);
         }
         listMessage.add(new MessageChatBox(true, "Hello !!!"));
         listMessage.add(new MessageChatBox(false, "Hello !!!"));
@@ -268,7 +227,6 @@ public class Chess extends AppCompatActivity {
         listMessage.add(new MessageChatBox(true, "Tôi trước nhé"));
         listMessage.add(new MessageChatBox(false, "Tùy ông, sao cũng được mà"));
     }
-
 
     class CustomAdapter extends BaseAdapter {
 
@@ -295,7 +253,7 @@ public class Chess extends AppCompatActivity {
             tvInputMessage.setText(listMessage.get(position).getMessage());
             if (!listMessage.get(position).getYours()) {
                 rlInputMessage.setGravity(Gravity.LEFT);
-                tvInputMessage.setTextColor(getColor(R.color.colorBoardDark));
+                tvInputMessage.setTextColor(Color.parseColor("#FBEED4"));
                 tvInputMessage.setBackground(getDrawable(R.drawable.background_receiver));
             }
             return view;

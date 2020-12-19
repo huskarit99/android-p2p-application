@@ -14,5 +14,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         Intent intent = new Intent(MainActivity.this, Home.class);
         startActivity(intent);
+        finish();
+        System.exit(0);
     }
 }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="#FFF1CB"
+    app:cardBackgroundColor="#C5B07D"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp">
     <LinearLayout
@@ -27,8 +27,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_sender"
                     android:padding="10dp"
-                    android:textSize="15dp"
-                    android:textColor="@color/colorBoardLight"
+                    android:textSize="13dp"
+                    android:textColor="#FBEED4"
                     android:text="Nhanh len ban oi, hoi bi lau roi nhe">
                 </TextView>
             </RelativeLayout>

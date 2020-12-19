@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
   <resources>
+    <color name="colorSpecialButton">#5A7900</color>
     <color name="colorButton">#B54D00</color>
     <color name="colorDiamond">#E5C927</color>
     <color name="colorDivider">#833D20</color>
