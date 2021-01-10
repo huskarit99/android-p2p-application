@@ -1,18 +1,27 @@
 package com.example.p2papplication.activities;
 
+import android.app.Activity;
+import android.app.Activity.*;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.p2papplication.R;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,37 +31,71 @@ import com.example.p2papplication.models.MessageChatBox;
 import java.util.ArrayList;
 
 public class Chess extends AppCompatActivity {
-
+    ImageView ivButtonSendMessage;
+    EditText edtInputMessage;
     ListView listViewMessage;
-    ArrayList<MessageChatBox> listMessage = new ArrayList<>();
-    Chess.CustomAdapter customAdapter;
+    ArrayList<MessageChatBox> listMessage = new ArrayList<MessageChatBox>();
+    CustomAdapter customAdapter;
 
     TextView[][] DisplayBoard = new TextView[8][8];
     TextView[][] DisplayBoardBackground = new TextView[8][8];
 
     ImageView ivExit;
 
+    Handler h = new Handler(Looper.getMainLooper());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        configActionBarAndNavigationBar();
         setContentView(R.layout.activity_playchess);
-
         mapping();
+        init();
         customAdapter = new Chess.CustomAdapter();
         listViewMessage.setAdapter(customAdapter);
-        init();
-
         ivExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+        ivButtonSendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listMessage.add(new MessageChatBox(true, String.valueOf(edtInputMessage.getText())));
+                edtInputMessage.setText("");
+                listViewMessage.setAdapter(customAdapter);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        configActionBarAndNavigationBar();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        configActionBarAndNavigationBar();
+    }
+
+    private void configActionBarAndNavigationBar() {
+        getSupportActionBar().hide();
+        View decorView = getWindow().getDecorView();
+        final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE;
+        decorView.setSystemUiVisibility(flags);
     }
 
     private void mapping() {
+        ivButtonSendMessage = findViewById(R.id.ivButtonSendMessage);
+        edtInputMessage = findViewById(R.id.edtInputMessage);
         listViewMessage = findViewById(R.id.listViewMessage);
         ivExit = findViewById(R.id.ivExit);
 
@@ -220,7 +263,7 @@ public class Chess extends AppCompatActivity {
         }
         listMessage.add(new MessageChatBox(true, "Hello !!!"));
         listMessage.add(new MessageChatBox(false, "Hello !!!"));
-        listMessage.add(new MessageChatBox(true, "Tôi tên là Nguyễn Thái Học"));
+        listMessage.add(new MessageChatBox(true, "Tôi tên là Nguyễn Thái Học hihihihihihihhihi"));
         listMessage.add(new MessageChatBox(false, "Tôi tên là Nguyễn Minh Thức"));
         listMessage.add(new MessageChatBox(false, "Cùng chơi chứ"));
         listMessage.add(new MessageChatBox(true, "Ok ông"));
@@ -248,13 +291,17 @@ public class Chess extends AppCompatActivity {
         @Override
         public View getView(int position, View view, ViewGroup parent) {
             view = getLayoutInflater().inflate(R.layout.message, null);
-            RelativeLayout rlInputMessage = view.findViewById(R.id.rlInputMessage);
-            TextView tvInputMessage = view.findViewById(R.id.tvInputMessage);
-            tvInputMessage.setText(listMessage.get(position).getMessage());
+
+            LinearLayout llMessage = view.findViewById(R.id.llMessage);
+
+            final TextView tvMessage = view.findViewById(R.id.tvMessage);
+            tvMessage.setText(listMessage.get(position).getMessage());
+            System.out.println(listMessage.get(position).getMessage());
             if (!listMessage.get(position).getYours()) {
-                rlInputMessage.setGravity(Gravity.LEFT);
-                tvInputMessage.setTextColor(Color.parseColor("#FBEED4"));
-                tvInputMessage.setBackground(getDrawable(R.drawable.background_receiver));
+                 llMessage.setGravity(Gravity.LEFT);
+            }
+            else {
+                llMessage.setGravity(Gravity.RIGHT);
             }
             return view;
         }

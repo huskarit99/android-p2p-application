@@ -3,9 +3,12 @@ package com.example.p2papplication.activities;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -39,7 +42,8 @@ public class ScanPlayers extends AppCompatActivity  implements  ActivityCompat.O
 
     Button btnOnOff, btnDiscover, btnSend;
     ListView listView;
-    TextView read_msg_box, connectionStatus;
+    TextView read_msg_box;
+    public TextView connectionStatus;
     EditText writeMsg;
 
     WifiManager wifiManager;
@@ -60,8 +64,23 @@ public class ScanPlayers extends AppCompatActivity  implements  ActivityCompat.O
         setContentView(R.layout.activity_scan_players);
 
         mapping();
+
+        checkStateOfWiFi();
+
         exqListener();
     }
+
+    private void checkStateOfWiFi() {
+        NetworkInfo wifiCheck;
+        ConnectivityManager connectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        wifiCheck = connectionManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (wifiCheck.isConnected()) {
+            btnOnOff.setText("WIFI OFF");
+        } else {
+            btnOnOff.setText("WIFI ON");
+        }
+    }
+
 
     private void exqListener() {
         btnOnOff.setOnClickListener(new View.OnClickListener() {
@@ -69,10 +88,10 @@ public class ScanPlayers extends AppCompatActivity  implements  ActivityCompat.O
             public void onClick(View v) {
                 if (wifiManager.isWifiEnabled()) {
                     wifiManager.setWifiEnabled(false);
-                    btnOnOff.setText("WIFI OFF");
+                    btnOnOff.setText("WIFI ON");
                 } else {
                     wifiManager.setWifiEnabled(true);
-                    btnOnOff.setText("WIFI ON");
+                    btnOnOff.setText("WIFI OFF");
                 }
             }
         });
@@ -104,7 +123,7 @@ public class ScanPlayers extends AppCompatActivity  implements  ActivityCompat.O
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                 final WifiP2pDevice device = deviceArray[position];
+                final WifiP2pDevice device = deviceArray[position];
                 WifiP2pConfig config = new WifiP2pConfig();
                 config.deviceAddress = device.deviceAddress;
 
@@ -140,10 +159,10 @@ public class ScanPlayers extends AppCompatActivity  implements  ActivityCompat.O
         connectionStatus = (TextView) findViewById(R.id.connectionStatus);
         writeMsg = (EditText) findViewById(R.id.writeMsg);
 
-        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(this, getMainLooper(), null);
-        
+        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
         mReceiver = new WiFiDirectBroadcastReceiver(mManager, mChannel, this);
 
         mIntentFilter = new IntentFilter();
@@ -170,9 +189,6 @@ public class ScanPlayers extends AppCompatActivity  implements  ActivityCompat.O
                     deviceArray[index] = device;
                     index++;
                 }
-
-                System.out.println("haha");
-
                 ArrayAdapter<String> adapter= new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, deviceNameArray);
                 listView.setAdapter(adapter);
             }
@@ -197,12 +213,14 @@ public class ScanPlayers extends AppCompatActivity  implements  ActivityCompat.O
         }
     };
 
+    /* register the broadcast receiver with the intent values to be matched */
     @Override
     protected void onResume() {
         super.onResume();
         registerReceiver(mReceiver, mIntentFilter);
     }
 
+    /* unregister the broadcast receiver */
     @Override
     protected void onPause() {
         super.onPause();
